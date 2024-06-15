@@ -163,5 +163,4 @@ cython_debug/
 
 .vscode
 .DS_store
-*.mid
-*.wav
+output/

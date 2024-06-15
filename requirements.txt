@@ -1,0 +1,3 @@
+midi2audio==0.1.1
+mingus==0.6.1
+six==1.16.0
