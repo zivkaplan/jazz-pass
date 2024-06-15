@@ -46,7 +46,7 @@ chord_options = [
 
 def fix_name(name: str):
     regex = r"^(.*\|..).*"
-    name = re.sub(regex, r'\1', name)
+    name = re.sub(regex, r"\1", name)
     name = name.replace("|", "/")
     return name
 
@@ -106,7 +106,7 @@ class Progression:
             arp_bar.place_rest(4)
             arpg.add_bar(arp_bar)
         self._tracks["melodic"] = arpg
-        
+
     def _prepare_harmonic_track(self):
         track = Track()
         for chord in self._progression:
@@ -115,7 +115,7 @@ class Progression:
             new_bar.transpose("12", up=False)
             track.add_bar(new_bar)
         self._tracks["harmonic"] = track
-        
+
     def play(self, *, melodic=False):
         if melodic:
             fluidsynth.play_Track(self._tracks["melodic"], bpm=60)
@@ -135,7 +135,7 @@ def midi_to_wav(infile, outfile="output.wav", *, sf2=DEFAULT_SF2):
     M2AFluidSynth(sf2).midi_to_audio(infile, outfile)
 
 
-if __name__ == "__main__":
+def generate_wav(length=PROGRESSION_LENGTH):
     if not os.path.exists(DEFAULT_OUTPUT_DIR):
         os.makedirs(DEFAULT_OUTPUT_DIR)
 
@@ -144,8 +144,13 @@ if __name__ == "__main__":
     prog.finilize()
     print(prog.get_progression())
     print(prog.get_chords_notes())
-    prog.play()
-    prog.play(melodic=True)
+    # prog.play()
+    # prog.play(melodic=True)
     midi_file = os.path.join(DEFAULT_OUTPUT_DIR, "new.mid")
     prog.midi_out(midi_file)
-    midi_to_wav(midi_file, os.path.join(DEFAULT_OUTPUT_DIR, "output.wav"))
+    wav_file = os.path.join(DEFAULT_OUTPUT_DIR, "output.wav")
+    midi_to_wav(midi_file, wav_file)
+    return wav_file
+
+
+# class ProgressionGenerator():
